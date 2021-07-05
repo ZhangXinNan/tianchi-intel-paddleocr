@@ -20,7 +20,8 @@ https://tianchi.aliyun.com/competition/entrance/531902/introduction
 为了方便大家运行baseline，这里写好了训练和预测代码，在GPU的情况下需要训练半个小时，然后10分钟预测。
 
 ```
-git clone 
+git clone https://gitee.com/coggle/tianchi-intel-PaddleOCR
+cd tianchi-intel-PaddleOCR
 sh run.sh
 ```
 
