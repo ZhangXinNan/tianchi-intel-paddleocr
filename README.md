@@ -111,3 +111,6 @@ https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.1/doc/doc_ch/recognitio
 
 https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.1/doc/doc_ch/inference.md
 
+
+公众号二维码
+![coggle](https://coggle.club/assets/img/coggle_qrcode.jpg)
