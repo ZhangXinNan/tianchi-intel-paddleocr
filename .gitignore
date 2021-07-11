@@ -29,3 +29,12 @@ paddleocr.egg-info/
 /deploy/android_demo/app/PaddleLite/
 /deploy/android_demo/app/.cxx/
 /deploy/android_demo/app/cache/
+
+
+doc/
+input/
+pretrain_models/
+submit/
+train_data/
+data/
+*.out
