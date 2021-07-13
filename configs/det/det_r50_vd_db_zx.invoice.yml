@@ -64,8 +64,7 @@ Train:
     data_dir: ./
     label_file_list:
       - data/det_data/Xeon1OCR_round1_train_20210524.csv.train.txt
-      - data/det_data/Xeon1OCR_round1_train2_20210526.csv.train.txt
-    ratio_list: [0.25, 0.75]
+    ratio_list: [1.0]
     transforms:
       - DecodeImage: # load image
           img_mode: BGR
@@ -107,8 +106,7 @@ Eval:
     data_dir: ./
     label_file_list:
       - data/det_data/Xeon1OCR_round1_train_20210524.csv.val.txt
-      - data/det_data/Xeon1OCR_round1_train2_20210526.csv.val.txt
-    ratio_list: [0.25, 0.75]
+    ratio_list: [1.0]
     transforms:
       - DecodeImage: # load image
           img_mode: BGR

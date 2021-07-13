@@ -3,7 +3,7 @@ Global:
   epoch_num: 1200
   log_smooth_window: 20
   print_batch_step: 10
-  save_model_dir: ./output/det_r50_vd_zx2/
+  save_model_dir: ./output/det_r50_vd_zx.npx/
   save_epoch_step: 1200
   # evaluation is run every 2000 iterations
   eval_batch_step: [0,2000]
@@ -42,7 +42,7 @@ Optimizer:
   beta1: 0.9
   beta2: 0.999
   lr:
-    learning_rate: 0.001
+    learning_rate: 0.0001
   regularizer:
     name: 'L2'
     factor: 0
@@ -63,9 +63,8 @@ Train:
     name: SimpleDataSet
     data_dir: ./
     label_file_list:
-      - data/det_data/Xeon1OCR_round1_train_20210524.csv.train.txt
       - data/det_data/Xeon1OCR_round1_train2_20210526.csv.train.txt
-    ratio_list: [0.25, 0.75]
+    ratio_list: [1.0]
     transforms:
       - DecodeImage: # load image
           img_mode: BGR
@@ -106,9 +105,8 @@ Eval:
     name: SimpleDataSet
     data_dir: ./
     label_file_list:
-      - data/det_data/Xeon1OCR_round1_train_20210524.csv.val.txt
       - data/det_data/Xeon1OCR_round1_train2_20210526.csv.val.txt
-    ratio_list: [0.25, 0.75]
+    ratio_list: [1.0]
     transforms:
       - DecodeImage: # load image
           img_mode: BGR
