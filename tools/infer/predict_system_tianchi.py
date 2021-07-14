@@ -140,121 +140,63 @@ def sorted_boxes(dt_boxes):
     return _boxes
 
 
+def test(csv_path, img_dir, out_json_file):
+    df = pd.read_csv(csv_path)
+    res = {}
+    for row in df.iloc[:].iterrows():
+        path = json.loads(row[1]['原始数据'])['tfspath']
+        print(path)
+        image_file = img_dir + path.split('/')[-1]
+        img, flag = check_and_read_gif(image_file)
+        if not flag:
+            img = cv2.imread(image_file)
+        if img is None:
+            logger.info("error in loading image:{}".format(image_file))
+            continue
+        starttime = time.time()
+        dt_boxes, rec_res = text_sys(img)
+        elapse = time.time() - starttime
+        logger.info("Predict time of %s: %.3fs" % (image_file, elapse))
+
+        key = path.split('/')[-1][:-4]
+        res[key] = {
+            'pointsList': [],
+            # 'confidence': [],
+            'ignoreList': [],
+            'classesList': [],
+            'transcriptionsList': []
+        }
+        for box, (text, score) in zip(dt_boxes, rec_res):
+            res[key]['pointsList'].append([float(x) for x in list(box.reshape(-1))])
+            res[key]['transcriptionsList'].append(text)
+            res[key]['ignoreList'].append(False)
+            res[key]['classesList'].append(1)
+
+    with open(out_json_file, 'w') as up:
+        json.dump(res, up)
+
+
 def main(args):
     # image_file_list = get_image_file_list(args.image_dir)
     # image_file_list = image_file_list[args.process_id::args.total_process_num]
+    global text_sys
     text_sys = TextSystem(args)
     is_visualize = False
     font_path = args.vis_font_path
     drop_score = args.drop_score
-    
+
+    test('input/Xeon1OCR_round1_test1_20210528.csv', 'data/test1/', 'Xeon1OCR_round1_test1_20210528.json')
+    # test('input/Xeon1OCR_round1_test2_20210528.csv', 'data/test2/', 'Xeon1OCR_round1_test2_20210528.json')
+    # test('input/Xeon1OCR_round1_test3_20210528.csv', 'data/test3/', 'Xeon1OCR_round1_test3_20210528.json')
+
+
+if __name__ == "__main__":
     import pandas as pd
     import codecs
     import os, json
 
-    df = pd.read_csv('input/Xeon1OCR_round1_test1_20210528.csv')
-    res = {}
-    for row in df.iloc[:].iterrows():
-        path = json.loads(row[1]['原始数据'])['tfspath']
-        print(path)
-        image_file = 'train_data/tianchi/image/' + path.split('/')[-1]
-        img, flag = check_and_read_gif(image_file)
-        if not flag:
-            img = cv2.imread(image_file)
-        if img is None:
-            logger.info("error in loading image:{}".format(image_file))
-            continue
-        starttime = time.time()
-        dt_boxes, rec_res = text_sys(img)
-        elapse = time.time() - starttime
-        logger.info("Predict time of %s: %.3fs" % (image_file, elapse))
+    text_sys = None
 
-        key = path.split('/')[-1][:-4]
-        res[key] = {
-            'pointsList': [],
-            # 'confidence': [],
-            'ignoreList': [],
-            'classesList': [],
-            'transcriptionsList': []
-        }
-        for box, (text, score) in zip(dt_boxes, rec_res):
-            res[key]['pointsList'].append([float(x) for x in list(box.reshape(-1))])
-            res[key]['transcriptionsList'].append(text)
-            res[key]['ignoreList'].append(False)
-            res[key]['classesList'].append(1)
-
-    with open('Xeon1OCR_round1_test1_20210528.json', 'w') as up:
-        json.dump(res, up)
-
-    df = pd.read_csv('input/Xeon1OCR_round1_test2_20210528.csv')
-    res = {}
-    for row in df.iloc[:].iterrows():
-        path = json.loads(row[1]['原始数据'])['tfspath']
-        print(path)
-        image_file = 'train_data/tianchi/image/' + path.split('/')[-1]
-        img, flag = check_and_read_gif(image_file)
-        if not flag:
-            img = cv2.imread(image_file)
-        if img is None:
-            logger.info("error in loading image:{}".format(image_file))
-            continue
-        starttime = time.time()
-        dt_boxes, rec_res = text_sys(img)
-        elapse = time.time() - starttime
-        logger.info("Predict time of %s: %.3fs" % (image_file, elapse))
-
-        key = path.split('/')[-1][:-4]
-        res[key] = {
-            'pointsList': [],
-            # 'confidence': [],
-            'ignoreList': [],
-            'classesList': [],
-            'transcriptionsList': []
-        }
-        for box, (text, score) in zip(dt_boxes, rec_res):
-            res[key]['pointsList'].append([float(x) for x in list(box.reshape(-1))])
-            res[key]['transcriptionsList'].append(text)
-            res[key]['ignoreList'].append(False)
-            res[key]['classesList'].append(1)
-
-    with open('Xeon1OCR_round1_test2_20210528.json', 'w') as up:
-        json.dump(res, up)
-        
-    df = pd.read_csv('input/Xeon1OCR_round1_test3_20210528.csv')
-    res = {}
-    for row in df.iloc[:].iterrows():
-        path = json.loads(row[1]['原始数据'])['tfspath']
-        print(path)
-        image_file = 'train_data/tianchi/image/' + path.split('/')[-1]
-        img, flag = check_and_read_gif(image_file)
-        if not flag:
-            img = cv2.imread(image_file)
-        if img is None:
-            logger.info("error in loading image:{}".format(image_file))
-            continue
-        starttime = time.time()
-        dt_boxes, rec_res = text_sys(img)
-        elapse = time.time() - starttime
-        logger.info("Predict time of %s: %.3fs" % (image_file, elapse))
-
-        key = path.split('/')[-1][:-4]
-        res[key] = {
-            'pointsList': [],
-            # 'confidence': [],
-            'ignoreList': [],
-            'classesList': [],
-            'transcriptionsList': []
-        }
-        for box, (text, score) in zip(dt_boxes, rec_res):
-            res[key]['pointsList'].append([float(x) for x in list(box.reshape(-1))])
-            res[key]['transcriptionsList'].append(text)
-            res[key]['ignoreList'].append(False)
-            res[key]['classesList'].append(1)
-
-    with open('Xeon1OCR_round1_test3_20210528.json', 'w') as up:
-        json.dump(res, up)
-        
-if __name__ == "__main__":
     args = utility.parse_args()
     if args.use_mp:
         p_list = []
