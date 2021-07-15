@@ -33,35 +33,6 @@ python3 tools/infer/predict_system_tianchi.py \
 zip -r submit.zip Xeon1OCR_round1_test*
 
 
-# 模型转换
-python3 tools/export_model.py \
-    -c configs/det/det_r50_vd_db_zx.yml \
-    -o Global.pretrained_model=output/det_r50_vd_zx/best_accuracy  Global.save_inference_dir=output/det_r50_vd_zx/
-
-# test1 book
-python3 tools/infer/predict_system_tianchi.py \
-    --det_model_dir="./inference/ch_ppocr_server_v2.0_det_infer"  \
-    --rec_model_dir="./inference/ch_ppocr_server_v2.0_rec_infer/" \
-    --cls_model_dir='./inference/ch_ppocr_mobile_v2.0_cls_infer/' \
-    --use_angle_cls=True \
-    --use_space_char=True
-
-# test2 invoice
-python3 tools/infer/predict_system_tianchi.py \
-    --det_model_dir="./output/det_r50_vd_zx.invoice"  \
-    --rec_model_dir="./inference/ch_ppocr_server_v2.0_rec_infer/" \
-    --cls_model_dir='./inference/ch_ppocr_mobile_v2.0_cls_infer/' \
-    --use_angle_cls=True \
-    --use_space_char=True
-# test npx
-python3 tools/infer/predict_system_tianchi.py \
-    --det_model_dir="./output/det_r50_vd_zx.npx"  \
-    --rec_model_dir="./inference/ch_ppocr_server_v2.0_rec_infer/" \
-    --cls_model_dir='./inference/ch_ppocr_mobile_v2.0_cls_infer/' \
-    --use_angle_cls=True \
-    --use_space_char=True
-
-```
 
 
 # 训练检测模型

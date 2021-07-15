@@ -185,7 +185,8 @@ def main(args):
     font_path = args.vis_font_path
     drop_score = args.drop_score
 
-    test('input/Xeon1OCR_round1_test1_20210528.csv', 'data/test1/', 'Xeon1OCR_round1_test1_20210528.json')
+    test(args.test_csvfile, args.test_img_dir, args.test_result)
+    # test('input/Xeon1OCR_round1_test1_20210528.csv', 'data/test1/', 'Xeon1OCR_round1_test1_20210528.json')
     # test('input/Xeon1OCR_round1_test2_20210528.csv', 'data/test2/', 'Xeon1OCR_round1_test2_20210528.json')
     # test('input/Xeon1OCR_round1_test3_20210528.csv', 'data/test3/', 'Xeon1OCR_round1_test3_20210528.json')
 

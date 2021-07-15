@@ -104,6 +104,9 @@ def parse_args():
     parser.add_argument("--total_process_num", type=int, default=1)
     parser.add_argument("--process_id", type=int, default=0)
 
+    parser.add_argument('--test_csvfile')
+    parser.add_argument('--test_img_dir')
+    parser.add_argument('--test_result')
     return parser.parse_args()
 
 

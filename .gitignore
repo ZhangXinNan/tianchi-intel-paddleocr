@@ -38,4 +38,8 @@ submit/
 train_data/
 data/
 *.out
+Xeon1OCR_round1_test1_20210528.json
+Xeon1OCR_round1_test2_20210528.json
+Xeon1OCR_round1_test3_20210528.json
+
 
