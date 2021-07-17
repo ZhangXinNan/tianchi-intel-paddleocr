@@ -44,3 +44,8 @@ python3 tools/infer/predict_system_tianchi.py \
     --test_csvfile input/Xeon1OCR_round1_test3_20210528.csv \
     --test_img_dir data/test3/ \
     --test_result Xeon1OCR_round1_test3_20210528.json
+
+
+
+# 将结果文件压缩
+zip -r submit.zip Xeon1OCR_round1_test*

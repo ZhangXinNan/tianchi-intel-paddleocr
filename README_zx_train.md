@@ -64,11 +64,19 @@ best metric, hmean: 0.6432003137562505, precision: 0.7324698526127735, recall: 0
 
 
 
-export CUDA_VISIBLE_DEVICES='3'
+export CUDA_VISIBLE_DEVICES='0'
 nohup python3 tools/train.py \
     -c configs/det/ch_det_res18_db.zx.npx.yml \
     >nohup.train.ch_det_res18_db.zx.npx.out &
-visualdl --logdir output/ch_db_res18.zx.npx/vdl -p 8083 -t 192.168.144.125
+visualdl --logdir output/ch_db_res18.zx.npx/vdl -p 8083 -t 10.168.12.11
+
+
+# 第四次训练book
+export CUDA_VISIBLE_DEVICES='1'
+nohup python3 tools/train.py \
+    -c configs/det/ch_det_res18_db.zx.book.yml \
+    >nohup.train.ch_det_res18_db.zx.book.out &
+visualdl --logdir output/ch_db_res18.zx.book/vdl -p 8081 -t 10.168.12.11
 ```
 
 
