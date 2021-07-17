@@ -3,7 +3,7 @@ Global:
   epoch_num: 1200
   log_smooth_window: 20
   print_batch_step: 10
-  save_model_dir: ./output/ch_db_res18.zx.invoice+npx/
+  save_model_dir: ./output/ch_db_res18.zx.npx/
   save_epoch_step: 100
   # evaluation is run every 5000 iterations after the 4000th iteration
   eval_batch_step: [0, 2000]
@@ -66,9 +66,8 @@ Train:
     name: SimpleDataSet
     data_dir: ./
     label_file_list:
-      - data/det_data/Xeon1OCR_round1_train_20210524.csv.train.txt
       - data/det_data/Xeon1OCR_round1_train2_20210526.csv.train.txt
-    ratio_list: [0.25, 0.75]
+    ratio_list: [1.0]
     transforms:
       - DecodeImage: # load image
           img_mode: BGR
@@ -109,9 +108,8 @@ Eval:
     name: SimpleDataSet
     data_dir: ./
     label_file_list:
-      - data/det_data/Xeon1OCR_round1_train_20210524.csv.val.txt
       - data/det_data/Xeon1OCR_round1_train2_20210526.csv.val.txt
-    ratio_list: [0.25, 0.75]
+    ratio_list: [1.0]
     transforms:
       - DecodeImage: # load image
           img_mode: BGR

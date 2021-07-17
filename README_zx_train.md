@@ -31,6 +31,12 @@ epoch: [390/1200], iter: 60000, lr: 0.001000
 best metric, hmean: 0.6432003137562505, precision: 0.7324698526127735, recall: 0.5733263415486803, fps: 7.811742308914901, best_epoch: 234
 
 
+export CUDA_VISIBLE_DEVICES='1'
+nohup python3 tools/train.py \
+    -c configs/det/ch_det_res18_db.zx.invoice.yml \
+    >nohup.train.ch_det_res18_db.zx.invoice.out &
+visualdl --logdir output/ch_db_res18.zx.invoice/vdl -p 8081 -t 192.168.144.125
+
 # 第二次训练使用invoice + npx
 export CUDA_VISIBLE_DEVICES='1'
 nohup python3 tools/train.py \
@@ -40,11 +46,11 @@ nohup python3 tools/train.py \
 step    50000   hmean   0.57062e
 
 
+export CUDA_VISIBLE_DEVICES='2'
 nohup python3 tools/train.py \
     -c configs/det/ch_det_res18_db.zx.invoice+npx.yml \
     >nohup.train.ch_det_res18_db.zx.invoice+npx.out &
-
-visualdl --logdir output/ch_db_res18.zx.invoice+npx/vdl
+visualdl --logdir output/ch_db_res18.zx.invoice+npx/vdl -p 8082 -t 192.168.144.125
 
 # 第三次训练npx
 export CUDA_VISIBLE_DEVICES='0'
@@ -55,7 +61,21 @@ nohup python3 tools/train.py \
 step    54000   hmean   0.58004
 epoch: [351/1200], iter: 174000, lr: 0.000100
 best metric, hmean: 0.6432003137562505, precision: 0.7324698526127735, recall: 0.5733263415486803
+
+
+
+export CUDA_VISIBLE_DEVICES='3'
+nohup python3 tools/train.py \
+    -c configs/det/ch_det_res18_db.zx.npx.yml \
+    >nohup.train.ch_det_res18_db.zx.npx.out &
+visualdl --logdir output/ch_db_res18.zx.npx/vdl -p 8083 -t 192.168.144.125
 ```
+
+
+
+
+
+
 
 
 # 验证
