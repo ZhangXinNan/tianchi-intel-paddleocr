@@ -95,15 +95,15 @@ def split_train_val(result, out_train_file, out_val_file, val_num):
     pass
 
 
-def main():
+def main(args):
     csv_files = [('Xeon1OCR_round1_train1_20210526.csv', 'data/train1', 49),
                  ('Xeon1OCR_round1_train2_20210526.csv', 'data/train2', 441),
                  ('Xeon1OCR_round1_train_20210524.csv', 'data/train', 135)]
     for name, img_dir, val_num in csv_files:
         result = process_data('input/' + name, img_dir)
         split_train_val(result,
-                        'data/det_data/{}.train.txt'.format(name),
-                        'data/det_data/{}.val.txt'.format(name), val_num)
+                        '{}/{}.train.txt'.format(args.train_val_dir, name),
+                        '{}/{}.val.txt'.format(args.train_val_dir, name), val_num)
 
     csv_files = [('Xeon1OCR_round1_test1_20210528.csv', 'data/test1'),
                  ('Xeon1OCR_round1_test2_20210528.csv', 'data/test2'),
@@ -112,5 +112,12 @@ def main():
         process_data('input/' + name, img_dir)
 
 
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train_val_dir', default='data/det_data2')
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
-    main()
+    import argparse
+    main(get_args())
