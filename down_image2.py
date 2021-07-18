@@ -7,6 +7,8 @@ import urllib
 # from urllib import request
 import urllib.request
 from tqdm import tqdm
+import numpy as np
+import cv2
 '''
 urls = []
 
@@ -61,6 +63,30 @@ def down_image(url, out_dir):
 #     if os.path.exists('./train_data/tianchi/image/' + path.split('/')[-1]):
 #         continue
 #     urllib.request.urlretrieve(path, './train_data/tianchi/image/' + path.split('/')[-1])
+
+
+def convert_tianchi_paddleocr(annot, img_path):
+    if rotate_by_option:
+        img = cv2.imread(img_path)
+        h, w = img.shape[:2]
+        if annot[1] == '底部朝左':
+            img = cv2.flip(cv2.transpose(img), 0)
+            cv2.imwrite(img_path, img)
+        elif annot[1] == '底部朝上':
+            img = cv2.flip(img, -1)
+            cv2.imwrite(img_path, img)
+        elif annot[1] == '底部朝右':
+            img = cv2.flip(cv2.transpose(img), 1)
+            cv2.imwrite(img_path, img)
+
+    annot_ppocr = []
+    for text_line in annot[0]:
+        transcription = json.loads(text_line['text'])['text']
+        points = np.array([float(x) for x in text_line['coord']]).reshape((4, 2)).tolist()
+        annot_ppocr.append({"transcription": transcription, "points": points})
+    return json.dumps(annot_ppocr, ensure_ascii=False)
+
+
 def process_data(csv_path, out_img_dir):
     '''获取训练数据'''
     if not os.path.isdir(out_img_dir):
@@ -74,12 +100,13 @@ def process_data(csv_path, out_img_dir):
             urllib.request.urlretrieve(img_url, img_path)
         if '融合答案' in row[1]:
             annot = json.loads(row[1]['融合答案'])
+            annot = convert_tianchi_paddleocr(annot, img_path)
             result.append([img_path, annot])
     return result
 
 
 def split_train_val(result, out_train_file, out_val_file, val_num):
-    # random.shuffle(result)
+    random.shuffle(result)
     out_dir = os.path.dirname(out_train_file)
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
@@ -96,6 +123,10 @@ def split_train_val(result, out_train_file, out_val_file, val_num):
 
 
 def main(args):
+    global rotate_by_option
+    rotate_by_option = args.rotate_by_option.lower() == 'true'
+    print(rotate_by_option)
+
     csv_files = [('Xeon1OCR_round1_train1_20210526.csv', 'data/train1', 49),
                  ('Xeon1OCR_round1_train2_20210526.csv', 'data/train2', 441),
                  ('Xeon1OCR_round1_train_20210524.csv', 'data/train', 135)]
@@ -115,9 +146,11 @@ def main(args):
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_val_dir', default='data/det_data2')
+    parser.add_argument('--rotate_by_option', default='False')
     return parser.parse_args()
 
 
 if __name__ == '__main__':
     import argparse
+    rotate_by_option = False
     main(get_args())
