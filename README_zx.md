@@ -1,8 +1,8 @@
 
 # 数据
-book    train1  868,49,918      test1   49
-invoice train   2458,135,2594   test2   135
-npx     train2  7921,441,8363   test3   441
+book    train1  868,49,917      test1   49
+invoice train   2458,135,2593   test2   135
+npx     train2  7921,441,8362   test3   441
 
 ```
      868 data/det_data/Xeon1OCR_round1_train1_20210526.csv.train.txt
