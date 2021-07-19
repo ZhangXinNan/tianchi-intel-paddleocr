@@ -17,7 +17,7 @@ python3 tools/infer/predict_system_tianchi.py \
 
 python3 tools/export_model.py \
     -c configs/det/ch_det_res18_db.zx.invoice.yml \
-    -o Global.pretrained_model=output/ch_db_res18.zx.invoice/best_accuracy Global.save_inference_dir=output/ch_db_res18.zx.invoice/
+    -o Global.pretrained_model=output/ch_db_res18.zx.invoice/best_accuracy Global.save_inference_dir=output/ch_db_res18.zx.invoice
 
 python3 tools/infer/predict_system_tianchi.py \
     --det_model_dir="./output/ch_db_res18.zx.invoice"  \
@@ -32,11 +32,11 @@ python3 tools/infer/predict_system_tianchi.py \
 # test npx
 
 python3 tools/export_model.py \
-    -c configs/det/det_r50_vd_db_zx.npx.yml \
-    -o Global.pretrained_model=output/det_r50_vd_zx.npx/best_accuracy  Global.save_inference_dir=output/det_r50_vd_zx.npx/
+    -c configs/det/ch_det_res18_db.zx.npx.yml \
+    -o Global.pretrained_model=output/ch_db_res18.zx.npx/best_accuracy  Global.save_inference_dir=output/ch_db_res18.zx.npx
 
 python3 tools/infer/predict_system_tianchi.py \
-    --det_model_dir="./output/det_r50_vd_zx.npx"  \
+    --det_model_dir="./output/ch_db_res18.zx.npx"  \
     --rec_model_dir="./output/rec_ch_20210713" \
     --cls_model_dir='./inference/ch_ppocr_mobile_v2.0_cls_infer/' \
     --use_angle_cls=True \

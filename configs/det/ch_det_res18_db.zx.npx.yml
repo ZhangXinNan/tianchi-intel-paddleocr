@@ -116,7 +116,9 @@ Eval:
           channel_first: False
       - DetLabelEncode: # Class handling label
       - DetResizeForTest:
-           image_shape: [736, 1280]
+          image_shape: [736, 1280]
+          # limit_side_len: 2048
+          # limit_type: max
       - NormalizeImage:
           scale: 1./255.
           mean: [0.485, 0.456, 0.406]
@@ -129,4 +131,4 @@ Eval:
     shuffle: False
     drop_last: False
     batch_size_per_card: 1 # must be 1
-    num_workers: 1
+    num_workers: 0

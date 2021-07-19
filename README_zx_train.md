@@ -35,7 +35,7 @@ export CUDA_VISIBLE_DEVICES='1'
 nohup python3 tools/train.py \
     -c configs/det/ch_det_res18_db.zx.invoice.yml \
     >nohup.train.ch_det_res18_db.zx.invoice.out &
-visualdl --logdir output/ch_db_res18.zx.invoice/vdl -p 8081 -t 192.168.144.125
+visualdl --logdir output/ch_db_res18.zx.invoice/vdl -p 8081 -t 10.168.12.11
 
 # 第二次训练使用invoice + npx
 export CUDA_VISIBLE_DEVICES='1'
