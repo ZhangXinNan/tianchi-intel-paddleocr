@@ -37,6 +37,7 @@ pretrain_models/
 submit/
 train_data/
 data/
+data_calib/
 *.out
 *.zip
 Xeon1OCR_round1_test1_20210528.json
