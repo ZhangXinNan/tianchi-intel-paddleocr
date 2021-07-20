@@ -22,10 +22,10 @@ visualdl --logdir output/det_r50_vd_db_zx.calib.invoice/vdl -p 8081 -t 10.168.12
 
 ## invoice
 CONFIG_FILE=configs/det/det_r50_vd_db_zx.calib.invoice.yml
-MODLE_DIR=output/det_r50_vd_db_zx.calib.invoice
+MODEL_DIR=output/det_r50_vd_db_zx.calib.invoice
 python3 tools/export_model.py \
-    -c configs/det/det_r50_vd_db_zx.calib.invoice.yml \
-    -o Global.pretrained_model=output/det_r50_vd_db_zx.calib.invoice/best_accuracy  Global.save_inference_dir=output/det_r50_vd_db_zx.calib.invoice
+    -c $CONFIG_FILE \
+    -o Global.pretrained_model=$MODEL_DIR/best_accuracy  Global.save_inference_dir=$MODEL_DIR
 
 
 python3 tools/infer/predict_system_tianchi.py \
@@ -38,9 +38,13 @@ python3 tools/infer/predict_system_tianchi.py \
     --test_img_dir data/test2/ \
     --test_result Xeon1OCR_round1_test2_20210528.json
 
+## npx
+CONFIG_FILE=configs/det/det_r50_vd_db_zx.calib.npx.yml
+MODEL_DIR=output/det_r50_vd_db_zx.calib.npx
 python3 tools/export_model.py \
-    -c configs/det/det_r50_vd_db_zx.calib.npx.yml \
-    -o Global.pretrained_model=output/det_r50_vd_db_zx.calib.npx/best_accuracy  Global.save_inference_dir=output/det_r50_vd_db_zx.calib.npx
+    -c $CONFIG_FILE \
+    -o Global.pretrained_model=$MODEL_DIR/best_accuracy  Global.save_inference_dir=$MODEL_DIR
+
 
 python3 tools/infer/predict_system_tianchi.py \
     --det_model_dir="./output/det_r50_vd_db_zx.calib.npx"  \
