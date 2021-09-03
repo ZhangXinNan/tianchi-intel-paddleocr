@@ -9,37 +9,7 @@ import urllib.request
 from tqdm import tqdm
 import numpy as np
 import cv2
-'''
-urls = []
 
-# 训练集
-train = pd.concat([
-    pd.read_csv('input/Xeon1OCR_round1_train1_20210526.csv'),
-    pd.read_csv('input/Xeon1OCR_round1_train_20210524.csv')]
-)
-
-try:
-    os.mkdir('./train_data/tianchi/image/')
-except:
-    pass
-
-for row in train.iterrows():
-    path = json.loads(row[1]['原始数据'])['tfspath']
-    urls.append(path)
-    
-# 测试集
-train = pd.concat([
-    pd.read_csv('input/Xeon1OCR_round1_test1_20210528.csv'),
-    pd.read_csv('input/Xeon1OCR_round1_test2_20210528.csv'),
-    pd.read_csv('input/Xeon1OCR_round1_test3_20210528.csv')]
-)
-
-for row in train.iterrows():
-    path = json.loads(row[1]['原始数据'])['tfspath']
-    urls.append(path)
-
-print('Total images: ', len(urls))
-'''
 
 
 def down_image(url, out_dir):
@@ -51,18 +21,6 @@ def down_image(url, out_dir):
         return
     # urllib.request.urlretrieve(url, './train_data/tianchi/image/' + url.split('/')[-1])
     urllib.request.urlretrieve(url, save_path)
-
-
-# from joblib import Parallel, delayed
-# Parallel(n_jobs=-1)(delayed(down_image)(url) for url in tqdm(urls))
-
-
-# for row in train.iterrows():
-#     path = json.loads(row[1]['原始数据'])['tfspath']
-#     print(path)
-#     if os.path.exists('./train_data/tianchi/image/' + path.split('/')[-1]):
-#         continue
-#     urllib.request.urlretrieve(path, './train_data/tianchi/image/' + path.split('/')[-1])
 
 
 def convert_tianchi_paddleocr(annot, img_path):
@@ -140,7 +98,7 @@ def main(args):
     global rotate_by_option
     rotate_by_option = args.rotate_by_option.lower() == 'true'
     print(rotate_by_option)
-
+    '''
     csv_files = [('Xeon1OCR_round1_train1_20210526.csv', 'data/train1', 49),
                  ('Xeon1OCR_round1_train2_20210526.csv', 'data/train2', 441),
                  ('Xeon1OCR_round1_train_20210524.csv', 'data/train', 135)]
@@ -155,6 +113,13 @@ def main(args):
                  ('Xeon1OCR_round1_test3_20210528.csv', 'data/test3')]
     for name, img_dir in csv_files:
         process_data('input/' + name, img_dir)
+    '''
+    csv_files = [('OCR复赛数据集01.csv', 'data/train1', 400), ('OCR复赛数据集02.csv', 'data/train2', 100)]
+    for name, img_dir, val_num in csv_files:
+        result = process_data('input/' + name, img_dir)
+        split_train_val(result,
+                        '{}/{}.train.txt'.format(args.train_val_dir, name),
+                        '{}/{}.val.txt'.format(args.train_val_dir, name), val_num)
 
 
 def get_args():
